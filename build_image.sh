@@ -10,13 +10,33 @@ SUPPORTED_FLINK_VERSIONS=("1.11" "1.12" "1.13")
 SUPPORTED_JAVA_VERSIONS=("8" "11")
 SUPPORTED_SCALA_VERSIONS=("2.11" "2.12")
 
-while getopts ":f:j:s:" opt; do
+
+Help()
+{
+   # Display Help
+   echo "Flink image build script."
+   echo
+   echo "Syntax: ./build_image.sh [-f flink_version] [-j java_version] [-s scala_version]"
+   echo "options:"
+   echo "-h     Print help."
+   echo "-f     Specify Flink version. Supported versions: ${SUPPORTED_FLINK_VERSIONS[*]}"
+   echo "-j     Specify Java version. Supported versions: ${SUPPORTED_JAVA_VERSIONS[*]}"
+   echo "-s     Specify Scala version. Supported versions: ${SUPPORTED_SCALA_VERSIONS[*]}"
+   echo
+}
+
+
+while getopts ":f:j:s:h" opt; do
   case $opt in
     f) FLINK_VERSION="$OPTARG"
     ;;
     j) JAVA_VERSION="$OPTARG"
     ;;
     s) SCALA_VERSION="$OPTARG"
+    ;;
+    h) 
+       Help
+       exit
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
